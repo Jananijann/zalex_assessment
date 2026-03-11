@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx @react-native-community/cli init ZalexCertApp --version 0.84.0 --skip-git-init --skip-install)",
+      "Bash(shopt -s dotglob)",
+      "Bash(mv /home/janani/ZalexAssessment/ZalexCertApp/* /home/janani/ZalexAssessment/)",
+      "Bash(mv /home/janani/ZalexAssessment/ZalexCertApp/.* /home/janani/ZalexAssessment/)",
+      "Bash(npm install:*)",
+      "Bash(npx jest:*)",
+      "Bash(npx tsc:*)",
+      "Bash(while read:*)",
+      "Bash(do sed:*)",
+      "Bash(done)",
+      "Bash(grep -E \"\\\\.tsx$\")",
+      "Bash(git init:*)",
+      "Bash(npx husky:*)",
+      "Bash(npx eslint:*)",
+      "Bash(grep -v \"^$\")",
+      "Bash(npx prettier:*)"
+    ]
+  }
+}
