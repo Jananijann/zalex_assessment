@@ -14,31 +14,69 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     ...SHADOWS.md,
   },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+  },
+  refRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
+  },
+  refNo: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: COLORS.textPrimary,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: COLORS.borderLight,
+    marginBottom: SPACING.lg,
+  },
+  twoColumn: {
+    flexDirection: 'row',
+    gap: SPACING.lg,
+    marginBottom: SPACING.lg,
+  },
+  columnItem: {
+    flex: 1,
+  },
+  columnHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginBottom: SPACING.xs,
+  },
   label: {
     color: COLORS.textSecondary,
-    marginTop: SPACING.lg,
-    marginBottom: SPACING.xs,
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '500',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
   },
   value: {
-    marginBottom: SPACING.sm,
     color: COLORS.textPrimary,
     fontSize: 15,
     lineHeight: 22,
+    backgroundColor: COLORS.borderLight,
+    padding: SPACING.md,
+    borderRadius: 8,
   },
-  statusRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: SPACING.sm,
-    marginBottom: SPACING.sm,
+  purposeLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 12,
+    fontWeight: '500',
+    marginBottom: SPACING.xs,
   },
-  previewButton: {
-    borderRadius: 10,
-    backgroundColor: COLORS.primary,
+  purposeBox: {
+    backgroundColor: COLORS.borderLight,
+    padding: SPACING.md,
+    borderRadius: 8,
+  },
+  purposeText: {
+    color: COLORS.textPrimary,
+    fontSize: 15,
+    lineHeight: 22,
   },
   editSection: {
     marginTop: SPACING.sm,
@@ -65,6 +103,46 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: COLORS.primary,
   },
+  documentCard: {
+    marginHorizontal: SPACING.lg,
+    marginBottom: SPACING.lg,
+    borderRadius: 12,
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    ...SHADOWS.sm,
+  },
+  documentContent: {
+    alignItems: 'center',
+  },
+  documentTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: COLORS.textSecondary,
+    marginBottom: SPACING.lg,
+    alignSelf: 'flex-start',
+  },
+  documentBody: {
+    alignItems: 'center',
+    paddingVertical: SPACING.md,
+  },
+  documentName: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: COLORS.textPrimary,
+    marginTop: SPACING.sm,
+  },
+  documentDesc: {
+    fontSize: 13,
+    color: COLORS.textSecondary,
+    marginTop: SPACING.xs,
+    marginBottom: SPACING.lg,
+    textAlign: 'center',
+  },
+  downloadButton: {
+    borderRadius: 10,
+    borderColor: COLORS.primary,
+  },
   messageCard: {
     margin: SPACING.lg,
     borderRadius: 12,
@@ -78,5 +156,16 @@ export const styles = StyleSheet.create({
     paddingVertical: SPACING.lg,
     fontSize: 14,
     lineHeight: 20,
+  },
+  statusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: SPACING.sm,
+    marginBottom: SPACING.sm,
+  },
+  previewButton: {
+    borderRadius: 10,
+    backgroundColor: COLORS.primary,
   },
 });

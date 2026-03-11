@@ -2,43 +2,44 @@ import {AppTheme} from './theme';
 
 export const lightTheme: AppTheme = {
   colors: {
-    primary: '#4F46E5', // indigo-600
-    primaryDark: '#3730A3', // indigo-800
-    primaryLight: '#EEF2FF', // indigo-50
-    secondary: '#6366F1', // indigo-500
-    secondaryLight: '#E0E7FF', // indigo-100
-    background: '#F8FAFC', // slate-50
+    primary: '#7C3AED',
+    primaryDark: '#5B21B6',
+    primaryLight: '#F5F3FF',
+    secondary: '#8B5CF6',
+    secondaryLight: '#EDE9FE',
+    background: '#F8FAFC',
     surface: '#FFFFFF',
-    textPrimary: '#0F172A', // slate-900
-    textSecondary: '#64748B', // slate-500
-    textDisabled: '#94A3B8', // slate-400
-    border: '#E2E8F0', // slate-200
-    borderLight: '#F1F5F9', // slate-100
-    danger: '#EF4444', // red-500
-    dangerLight: '#FEF2F2', // red-50
-    warning: '#F59E0B', // amber-500
-    warningLight: '#FFFBEB', // amber-50
-    info: '#3B82F6', // blue-500
-    infoLight: '#EFF6FF', // blue-50
-    success: '#10B981', // emerald-500
-    successLight: '#ECFDF5', // emerald-50
+    textPrimary: '#0F172A',
+    textSecondary: '#64748B',
+    textTertiary: '#94A3B8',
+    textDisabled: '#CBD5E1',
+    border: '#E2E8F0',
+    borderLight: '#F1F5F9',
+    danger: '#EF4444',
+    dangerLight: '#FEF2F2',
+    warning: '#F59E0B',
+    warningLight: '#FFFBEB',
+    info: '#3B82F6',
+    infoLight: '#EFF6FF',
+    success: '#10B981',
+    successLight: '#ECFDF5',
     white: '#FFFFFF',
     black: '#000000',
     overlay: 'rgba(0, 0, 0, 0.5)',
-    statusNew: '#3B82F6', // blue-500
-    statusPending: '#F59E0B', // amber-500
-    statusUnderReview: '#8B5CF6', // violet-500
-    statusDone: '#10B981', // emerald-500
-    headerBackground: '#4F46E5', // indigo-600
+    statusNew: '#3B82F6',
+    statusPending: '#F59E0B',
+    statusUnderReview: '#8B5CF6',
+    statusDone: '#10B981',
+    headerBackground: '#7C3AED',
     headerText: '#FFFFFF',
-    fabBackground: '#4F46E5', // indigo-600
+    fabBackground: '#7C3AED',
     chipText: '#FFFFFF',
-    statusNewLight: '#EFF6FF', // blue-50
-    statusPendingLight: '#FFFBEB', // amber-50
-    statusUnderReviewLight: '#F5F3FF', // violet-50
-    statusDoneLight: '#ECFDF5', // emerald-50
-    skeleton: '#E2E8F0', // slate-200
-    skeletonHighlight: '#F1F5F9', // slate-100
+    statusNewLight: '#EFF6FF',
+    statusPendingLight: '#FFFBEB',
+    statusUnderReviewLight: '#F5F3FF',
+    statusDoneLight: '#ECFDF5',
+    skeleton: '#E2E8F0',
+    skeletonHighlight: '#F1F5F9',
   },
   spacing: {
     xs: 4,

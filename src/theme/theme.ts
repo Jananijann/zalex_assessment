@@ -9,6 +9,7 @@ export interface AppTheme {
     surface: string;
     textPrimary: string;
     textSecondary: string;
+    textTertiary: string;
     textDisabled: string;
     border: string;
     borderLight: string;

@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, Alert} from 'react-native';
 import {STRINGS} from '../../../../shared/constants/strings';
+import {useColors} from '../../../../theme';
 import {announceForAccessibility} from '../../../../shared/utils/accessibility';
 import {useRequestForm} from '../../hooks/useRequestForm';
 import CertificateForm from '../../components/CertificateForm';
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const RequestCertificateScreen: React.FC<Props> = ({navigation}) => {
+  const colors = useColors();
   const form = useRequestForm();
 
   const handleSubmit = async () => {
@@ -29,7 +31,10 @@ const RequestCertificateScreen: React.FC<Props> = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+    <ScrollView
+      style={[styles.container, {backgroundColor: colors.background}]}
+      keyboardShouldPersistTaps="handled"
+    >
       <CertificateForm
         addressTo={form.addressTo}
         purpose={form.purpose}

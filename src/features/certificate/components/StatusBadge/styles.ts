@@ -2,15 +2,21 @@ import {StyleSheet} from 'react-native';
 import {SPACING} from '../../../../shared/styles';
 
 export const styles = StyleSheet.create({
-  chip: {
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
     alignSelf: 'flex-start',
     borderRadius: 20,
-    paddingHorizontal: SPACING.xs,
-    height: 28,
+    borderWidth: 1,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: 4,
   },
-  chipText: {
-    fontSize: 11,
+  icon: {
+    marginRight: 4,
+  },
+  text: {
+    fontSize: 12,
     fontWeight: '600',
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
   },
 });

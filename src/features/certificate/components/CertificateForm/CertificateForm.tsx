@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {View, Platform, Text as RNText} from 'react-native';
-import {TextInput, Button, HelperText} from 'react-native-paper';
+import {TextInput, Button, HelperText, Text, Card} from 'react-native-paper';
 import DateTimePicker, {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {COLORS} from '../../../../shared/styles/colors';
+import {useColors} from '../../../../theme';
 import {ValidationErrors} from '../../../../types';
 import CharacterCounter from '../CharacterCounter';
 import {styles} from './styles';
@@ -44,6 +44,7 @@ const CertificateForm: React.FC<CertificateFormProps> = ({
   onBlur,
   onSubmit,
 }) => {
+  const colors = useColors();
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const tomorrow = new Date();
@@ -79,137 +80,149 @@ const CertificateForm: React.FC<CertificateFormProps> = ({
   const employeeIdError = touched.employee_id ? errors.employee_id : undefined;
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        label={STRINGS.labelAddressTo}
-        value={addressTo}
-        onChangeText={onChangeAddressTo}
-        onBlur={() => onBlur('address_to')}
-        mode="outlined"
-        style={styles.input}
-        placeholder={STRINGS.placeholderAddressTo}
-        multiline
-        numberOfLines={2}
-        error={!!addressToError}
-        outlineColor={COLORS.border}
-        activeOutlineColor={COLORS.primary}
-        accessibilityLabel={STRINGS.labelAddressTo}
-        accessibilityHint={STRINGS.placeholderAddressTo}
-      />
-      {!!addressToError && (
-        <RNText accessibilityRole="alert" style={srOnly}>
-          {errors.address_to}
-        </RNText>
-      )}
-      <HelperText type="error" visible={!!addressToError}>
-        {errors.address_to}
-      </HelperText>
+    <Card style={[styles.formCard, {backgroundColor: colors.surface}]}>
+      <Card.Content>
+        <Text style={[styles.formTitle, {color: colors.textPrimary}]}>New Certificate Request</Text>
 
-      <TextInput
-        label={STRINGS.labelPurpose}
-        value={purpose}
-        onChangeText={onChangePurpose}
-        onBlur={() => onBlur('purpose')}
-        mode="outlined"
-        style={styles.input}
-        placeholder={STRINGS.placeholderPurpose}
-        multiline
-        numberOfLines={4}
-        error={!!purposeError}
-        outlineColor={COLORS.border}
-        activeOutlineColor={COLORS.primary}
-        accessibilityLabel={STRINGS.labelPurpose}
-        accessibilityHint={STRINGS.placeholderPurpose}
-      />
-      <CharacterCounter current={purpose.trim().length} minimum={50} />
-      {!!purposeError && (
-        <RNText accessibilityRole="alert" style={srOnly}>
-          {errors.purpose}
-        </RNText>
-      )}
-      <HelperText type="error" visible={!!purposeError}>
-        {errors.purpose}
-      </HelperText>
-
-      <View style={styles.dateRow}>
         <TextInput
-          label={STRINGS.labelIssuedOn}
-          value={issuedOn}
+          label={STRINGS.labelAddressTo}
+          value={addressTo}
+          onChangeText={onChangeAddressTo}
+          onBlur={() => onBlur('address_to')}
           mode="outlined"
-          style={styles.dateInput}
-          editable={false}
-          error={!!issuedOnError}
-          outlineColor={COLORS.border}
-          activeOutlineColor={COLORS.primary}
-          accessibilityLabel={STRINGS.labelIssuedOn}
-          accessibilityHint="Tap the calendar icon to select a date"
-          right={
-            <TextInput.Icon
-              icon="calendar"
-              onPress={() => setShowDatePicker(true)}
-              color={COLORS.primary}
-              accessibilityLabel={STRINGS.buttonSelectDate}
+          style={[styles.input, {backgroundColor: colors.surface}]}
+          placeholder={STRINGS.placeholderAddressTo}
+          multiline
+          numberOfLines={2}
+          error={!!addressToError}
+          outlineColor={colors.border}
+          activeOutlineColor={colors.primary}
+          textColor={colors.textPrimary}
+          accessibilityLabel={STRINGS.labelAddressTo}
+          accessibilityHint={STRINGS.placeholderAddressTo}
+        />
+        {!!addressToError && (
+          <RNText accessibilityRole="alert" style={srOnly}>
+            {errors.address_to}
+          </RNText>
+        )}
+        <HelperText type="error" visible={!!addressToError}>
+          {errors.address_to}
+        </HelperText>
+
+        <TextInput
+          label={STRINGS.labelPurpose}
+          value={purpose}
+          onChangeText={onChangePurpose}
+          onBlur={() => onBlur('purpose')}
+          mode="outlined"
+          style={[styles.input, {backgroundColor: colors.surface}]}
+          placeholder={STRINGS.placeholderPurpose}
+          multiline
+          numberOfLines={4}
+          error={!!purposeError}
+          outlineColor={colors.border}
+          activeOutlineColor={colors.primary}
+          textColor={colors.textPrimary}
+          accessibilityLabel={STRINGS.labelPurpose}
+          accessibilityHint={STRINGS.placeholderPurpose}
+        />
+        <CharacterCounter current={purpose.trim().length} minimum={50} />
+        {!!purposeError && (
+          <RNText accessibilityRole="alert" style={srOnly}>
+            {errors.purpose}
+          </RNText>
+        )}
+        <HelperText type="error" visible={!!purposeError}>
+          {errors.purpose}
+        </HelperText>
+
+        <View style={styles.rowFields}>
+          <View style={styles.halfField}>
+            <TextInput
+              label={STRINGS.labelIssuedOn}
+              value={issuedOn}
+              mode="outlined"
+              style={[styles.input, {backgroundColor: colors.surface}]}
+              editable={false}
+              error={!!issuedOnError}
+              outlineColor={colors.border}
+              activeOutlineColor={colors.primary}
+              textColor={colors.textPrimary}
+              accessibilityLabel={STRINGS.labelIssuedOn}
+              accessibilityHint="Tap the calendar icon to select a date"
+              right={
+                <TextInput.Icon
+                  icon="calendar"
+                  onPress={() => setShowDatePicker(true)}
+                  color={colors.primary}
+                  accessibilityLabel={STRINGS.buttonSelectDate}
+                />
+              }
             />
-          }
-        />
-      </View>
-      {!!issuedOnError && (
-        <RNText accessibilityRole="alert" style={srOnly}>
-          {errors.issued_on}
-        </RNText>
-      )}
-      <HelperText type="error" visible={!!issuedOnError}>
-        {errors.issued_on}
-      </HelperText>
+            {!!issuedOnError && (
+              <RNText accessibilityRole="alert" style={srOnly}>
+                {errors.issued_on}
+              </RNText>
+            )}
+            <HelperText type="error" visible={!!issuedOnError}>
+              {errors.issued_on}
+            </HelperText>
+          </View>
 
-      {showDatePicker && (
-        <DateTimePicker
-          value={parseDateFromString()}
-          mode="date"
-          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-          minimumDate={tomorrow}
-          onChange={handleDateChange}
-        />
-      )}
+          <View style={styles.halfField}>
+            <TextInput
+              label={STRINGS.labelEmployeeId}
+              value={employeeId}
+              onChangeText={onChangeEmployeeId}
+              onBlur={() => onBlur('employee_id')}
+              mode="outlined"
+              style={[styles.input, {backgroundColor: colors.surface}]}
+              placeholder={STRINGS.placeholderEmployeeId}
+              keyboardType="numeric"
+              error={!!employeeIdError}
+              outlineColor={colors.border}
+              activeOutlineColor={colors.primary}
+              textColor={colors.textPrimary}
+              accessibilityLabel={STRINGS.labelEmployeeId}
+              accessibilityHint={STRINGS.placeholderEmployeeId}
+            />
+            {!!employeeIdError && (
+              <RNText accessibilityRole="alert" style={srOnly}>
+                {errors.employee_id}
+              </RNText>
+            )}
+            <HelperText type="error" visible={!!employeeIdError}>
+              {errors.employee_id}
+            </HelperText>
+          </View>
+        </View>
 
-      <TextInput
-        label={STRINGS.labelEmployeeId}
-        value={employeeId}
-        onChangeText={onChangeEmployeeId}
-        onBlur={() => onBlur('employee_id')}
-        mode="outlined"
-        style={styles.input}
-        placeholder={STRINGS.placeholderEmployeeId}
-        keyboardType="numeric"
-        error={!!employeeIdError}
-        outlineColor={COLORS.border}
-        activeOutlineColor={COLORS.primary}
-        accessibilityLabel={STRINGS.labelEmployeeId}
-        accessibilityHint={STRINGS.placeholderEmployeeId}
-      />
-      {!!employeeIdError && (
-        <RNText accessibilityRole="alert" style={srOnly}>
-          {errors.employee_id}
-        </RNText>
-      )}
-      <HelperText type="error" visible={!!employeeIdError}>
-        {errors.employee_id}
-      </HelperText>
+        {showDatePicker && (
+          <DateTimePicker
+            value={parseDateFromString()}
+            mode="date"
+            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+            minimumDate={tomorrow}
+            onChange={handleDateChange}
+          />
+        )}
 
-      <Button
-        mode="contained"
-        onPress={onSubmit}
-        disabled={!formValid || submitting}
-        loading={submitting}
-        style={styles.submitButton}
-        labelStyle={styles.submitButtonLabel}
-        accessibilityLabel={submitting ? 'Submitting request' : STRINGS.buttonSubmit}
-        accessibilityHint="Double tap to submit the certificate request"
-        icon={({size, color}) => <Icon name="send" size={size} color={color} />}
-      >
-        {STRINGS.buttonSubmit}
-      </Button>
-    </View>
+        <Button
+          mode="contained"
+          onPress={onSubmit}
+          disabled={!formValid || submitting}
+          loading={submitting}
+          style={[styles.submitButton, {backgroundColor: colors.primary}]}
+          labelStyle={[styles.submitButtonLabel, {color: colors.white}]}
+          accessibilityLabel={submitting ? 'Submitting request' : STRINGS.buttonSubmit}
+          accessibilityHint="Double tap to submit the certificate request"
+          icon={({size, color}) => <Icon name="send" size={size} color={color} />}
+        >
+          {STRINGS.buttonSubmit}
+        </Button>
+      </Card.Content>
+    </Card>
   );
 };
 

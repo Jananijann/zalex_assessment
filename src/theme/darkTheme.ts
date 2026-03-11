@@ -2,43 +2,44 @@ import {AppTheme} from './theme';
 
 export const darkTheme: AppTheme = {
   colors: {
-    primary: '#818CF8', // indigo-400
-    primaryDark: '#4F46E5', // indigo-600
-    primaryLight: '#1E1B4B', // indigo-950
-    secondary: '#A5B4FC', // indigo-300
-    secondaryLight: '#1E1B4B', // indigo-950
-    background: '#0F172A', // slate-900
-    surface: '#1E293B', // slate-800
-    textPrimary: '#F8FAFC', // slate-50
-    textSecondary: '#94A3B8', // slate-400
-    textDisabled: '#64748B', // slate-500
-    border: '#334155', // slate-700
-    borderLight: '#1E293B', // slate-800
-    danger: '#F87171', // red-400
+    primary: '#A78BFA',
+    primaryDark: '#7C3AED',
+    primaryLight: '#1E1B4B',
+    secondary: '#C4B5FD',
+    secondaryLight: '#1E1B4B',
+    background: '#0F172A',
+    surface: '#1E293B',
+    textPrimary: '#F8FAFC',
+    textSecondary: '#94A3B8',
+    textTertiary: '#64748B',
+    textDisabled: '#475569',
+    border: '#334155',
+    borderLight: '#1E293B',
+    danger: '#F87171',
     dangerLight: '#451A1A',
-    warning: '#FBBF24', // amber-400
+    warning: '#FBBF24',
     warningLight: '#451A03',
-    info: '#60A5FA', // blue-400
+    info: '#60A5FA',
     infoLight: '#1E3A5F',
-    success: '#34D399', // emerald-400
+    success: '#34D399',
     successLight: '#064E3B',
     white: '#FFFFFF',
     black: '#000000',
     overlay: 'rgba(0, 0, 0, 0.7)',
-    statusNew: '#60A5FA', // blue-400
-    statusPending: '#FBBF24', // amber-400
-    statusUnderReview: '#A78BFA', // violet-400
-    statusDone: '#34D399', // emerald-400
-    headerBackground: '#1E293B', // slate-800
-    headerText: '#F8FAFC', // slate-50
-    fabBackground: '#818CF8', // indigo-400
+    statusNew: '#60A5FA',
+    statusPending: '#FBBF24',
+    statusUnderReview: '#A78BFA',
+    statusDone: '#34D399',
+    headerBackground: '#1E293B',
+    headerText: '#F8FAFC',
+    fabBackground: '#A78BFA',
     chipText: '#FFFFFF',
     statusNewLight: '#1E3A5F',
     statusPendingLight: '#451A03',
     statusUnderReviewLight: '#2E1065',
     statusDoneLight: '#064E3B',
-    skeleton: '#334155', // slate-700
-    skeletonHighlight: '#475569', // slate-600
+    skeleton: '#334155',
+    skeletonHighlight: '#475569',
   },
   spacing: {
     xs: 4,

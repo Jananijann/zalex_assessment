@@ -1,9 +1,9 @@
 import React, {useCallback, useState} from 'react';
 import {View, FlatList, RefreshControl} from 'react-native';
-import {Text, FAB, IconButton} from 'react-native-paper';
+import {Text, FAB} from 'react-native-paper';
 import {CertificateRequest} from '../../../../types';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {COLORS} from '../../../../shared/styles/colors';
+import {useColors} from '../../../../theme';
 import {useRequests} from '../../hooks/useRequests';
 import {useRequestFilters} from '../../hooks/useRequestFilters';
 import StatusSummaryCard from '../../components/StatusSummaryCard';
@@ -11,9 +11,7 @@ import SkeletonCard from '../../components/SkeletonCard';
 import EmptyState from '../../components/EmptyState';
 import ErrorState from '../../components/ErrorState';
 import RequestCard from '../../components/RequestCard';
-import SearchBar from '../../components/SearchBar';
 import FilterBar from '../../components/FilterBar';
-import SortControls from '../../components/SortControls';
 import {styles} from './styles';
 
 interface Props {
@@ -21,6 +19,7 @@ interface Props {
 }
 
 const RequestsListScreen: React.FC<Props> = ({navigation}) => {
+  const colors = useColors();
   const {requests, loading, error, refresh, refreshing, onRefresh} = useRequests();
   const filters = useRequestFilters(requests);
   const [activeStatus, setActiveStatus] = useState<string | null>(null);
@@ -51,9 +50,11 @@ const RequestsListScreen: React.FC<Props> = ({navigation}) => {
     [handlePressRequest],
   );
 
+  const containerStyle = [styles.container, {backgroundColor: colors.background}];
+
   if (loading && requests.length === 0) {
     return (
-      <View style={styles.container}>
+      <View style={containerStyle}>
         <StatusSummaryCard requests={[]} activeStatus={null} onStatusPress={() => {}} />
         {[1, 2, 3].map(i => (
           <SkeletonCard key={i} />
@@ -64,7 +65,7 @@ const RequestsListScreen: React.FC<Props> = ({navigation}) => {
 
   if (error && requests.length === 0) {
     return (
-      <View style={styles.container}>
+      <View style={containerStyle}>
         <ErrorState message={error} onRetry={refresh} />
       </View>
     );
@@ -72,7 +73,7 @@ const RequestsListScreen: React.FC<Props> = ({navigation}) => {
 
   if (requests.length === 0) {
     return (
-      <View style={styles.container}>
+      <View style={containerStyle}>
         <EmptyState onCreatePress={() => navigation.navigate('RequestCertificate')} />
       </View>
     );
@@ -85,30 +86,20 @@ const RequestsListScreen: React.FC<Props> = ({navigation}) => {
         activeStatus={activeStatus}
         onStatusPress={handleStatusPress}
       />
-      <SearchBar value={filters.searchQuery} onChangeText={filters.setSearchQuery} />
-      <View style={styles.toolbar}>
-        <IconButton
-          icon={filters.showFilters ? 'filter-off' : 'filter'}
-          onPress={filters.toggleFilters}
-          iconColor={COLORS.primary}
-        />
-      </View>
-      {filters.showFilters && (
-        <FilterBar
-          onApplyFilters={filters.handleApplyFilters}
-          onClearFilters={filters.handleClearFilters}
-        />
-      )}
-      <SortControls
-        currentField={filters.sortField}
-        currentOrder={filters.sortOrder}
+      <FilterBar
+        searchQuery={filters.searchQuery}
+        onSearchChange={filters.setSearchQuery}
+        onApplyFilters={filters.handleApplyFilters}
+        onClearFilters={filters.handleClearFilters}
+        sortField={filters.sortField}
+        sortOrder={filters.sortOrder}
         onSort={filters.handleSort}
       />
     </>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <FlatList
         data={filters.processedRequests}
         renderItem={renderItem}
@@ -116,7 +107,9 @@ const RequestsListScreen: React.FC<Props> = ({navigation}) => {
         ListHeaderComponent={listHeader}
         ListEmptyComponent={
           <View style={styles.emptyFiltered}>
-            <Text style={styles.emptyText}>{STRINGS.messageNoRequests}</Text>
+            <Text style={[styles.emptyText, {color: colors.textSecondary}]}>
+              {STRINGS.messageNoRequests}
+            </Text>
           </View>
         }
         contentContainerStyle={styles.listContent}
@@ -124,16 +117,17 @@ const RequestsListScreen: React.FC<Props> = ({navigation}) => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={[COLORS.primary]}
-            tintColor={COLORS.primary}
+            colors={[colors.primary]}
+            tintColor={colors.primary}
           />
         }
       />
       <FAB
         icon="plus"
-        style={styles.fab}
-        color={COLORS.white}
+        style={[styles.fab, {backgroundColor: colors.fabBackground}]}
+        color={colors.white}
         onPress={() => navigation.navigate('RequestCertificate')}
+        accessibilityLabel="Create new request"
       />
     </View>
   );

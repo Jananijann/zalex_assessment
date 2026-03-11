@@ -1,9 +1,9 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Card, Text} from 'react-native-paper';
+import {View, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CertificateRequest} from '../../../../types';
-import {COLORS} from '../../../../shared/styles/colors';
+import {useColors} from '../../../../theme';
 import {STRINGS} from '../../../../shared/constants/strings';
 import StatusBadge from '../StatusBadge';
 import {styles} from './styles';
@@ -13,31 +13,64 @@ interface RequestCardProps {
   onPress: () => void;
 }
 
+function getStatusBorderColor(
+  status: string | undefined,
+  colors: ReturnType<typeof useColors>,
+): string {
+  switch (status) {
+    case STRINGS.statusNew:
+      return colors.statusNew;
+    case STRINGS.statusPending:
+      return colors.statusPending;
+    case STRINGS.statusUnderReview:
+      return colors.statusUnderReview;
+    case STRINGS.statusDone:
+      return colors.statusDone;
+    default:
+      return colors.border;
+  }
+}
+
 const RequestCard: React.FC<RequestCardProps> = ({request, onPress}) => {
-  const isDone = request.status === STRINGS.statusDone;
+  const colors = useColors();
+  const borderColor = getStatusBorderColor(request.status, colors);
 
   return (
-    <Card style={styles.card} onPress={onPress} mode="elevated">
-      <Card.Content>
-        <View style={styles.headerRow}>
-          <Text style={styles.refNo}>{request.reference_no || 'N/A'}</Text>
-          <StatusBadge status={request.status || 'Unknown'} />
-        </View>
-        <Text style={styles.addressTo}>{request.address_to}</Text>
-        <View style={styles.footerRow}>
-          {isDone && (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Icon name="calendar-check" size={14} color={COLORS.textSecondary} />
-              <Text style={[styles.issuedOn, {marginLeft: 4}]}>{request.issued_on}</Text>
-            </View>
-          )}
-          <Icon name="chevron-right" size={20} color={COLORS.textSecondary} />
-        </View>
-        <Text style={styles.purpose} numberOfLines={2}>
-          {request.purpose}
+    <TouchableOpacity
+      style={[styles.card, {borderLeftColor: borderColor, backgroundColor: colors.surface}]}
+      onPress={onPress}
+      activeOpacity={0.7}
+      accessibilityLabel={`Request ${request.reference_no}, status ${request.status}`}
+      accessibilityHint="Double tap to view details"
+    >
+      <View style={styles.headerRow}>
+        <Text style={[styles.refNo, {color: colors.textPrimary}]}>
+          {request.reference_no || 'N/A'}
         </Text>
-      </Card.Content>
-    </Card>
+        <StatusBadge status={request.status || 'Unknown'} />
+      </View>
+
+      <Text style={[styles.purpose, {color: colors.textSecondary}]} numberOfLines={2}>
+        {request.purpose}
+      </Text>
+
+      <View style={styles.footerRow}>
+        <View style={styles.addressRow}>
+          <Text style={[styles.addressLabel, {color: colors.textSecondary}]}>To: </Text>
+          <Text style={[styles.addressTo, {color: colors.textSecondary}]} numberOfLines={1}>
+            {request.address_to}
+          </Text>
+        </View>
+        {request.issued_on ? (
+          <View style={styles.dateRow}>
+            <Icon name="calendar-outline" size={14} color={colors.textSecondary} />
+            <Text style={[styles.issuedOn, {color: colors.textSecondary}]}>
+              {request.issued_on}
+            </Text>
+          </View>
+        ) : null}
+      </View>
+    </TouchableOpacity>
   );
 };
 

@@ -1,8 +1,10 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {COLORS} from '../shared/styles/colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {STRINGS} from '../shared/constants/strings';
+import {useTheme, useColors} from '../theme';
 import RequestsListScreen from '../features/certificate/screens/RequestsListScreen';
 import RequestCertificateScreen from '../features/certificate/screens/RequestCertificateScreen';
 import RequestDetailsScreen from '../features/certificate/screens/RequestDetailsScreen';
@@ -11,13 +13,16 @@ import PdfPreviewScreen from '../features/certificate/screens/PdfPreviewScreen';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator: React.FC = () => {
+  const {isDark, toggleTheme} = useTheme();
+  const colors = useColors();
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="RequestsList"
         screenOptions={{
-          headerStyle: {backgroundColor: COLORS.headerBackground},
-          headerTintColor: COLORS.headerText,
+          headerStyle: {backgroundColor: colors.headerBackground},
+          headerTintColor: colors.headerText,
           headerTitleStyle: {fontWeight: '600', fontSize: 17},
           headerShadowVisible: false,
         }}
@@ -25,7 +30,22 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="RequestsList"
           component={RequestsListScreen}
-          options={{title: STRINGS.screenTitleRequests}}
+          options={{
+            title: STRINGS.screenTitleRequests,
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={toggleTheme}
+                accessibilityLabel={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                hitSlop={{top: 8, bottom: 8, left: 8, right: 8}}
+              >
+                <Icon
+                  name={isDark ? 'weather-sunny' : 'weather-night'}
+                  size={22}
+                  color={colors.headerText}
+                />
+              </TouchableOpacity>
+            ),
+          }}
         />
         <Stack.Screen
           name="RequestCertificate"

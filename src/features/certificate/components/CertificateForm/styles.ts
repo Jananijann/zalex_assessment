@@ -1,30 +1,34 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../../../shared/styles/colors';
 import {SPACING} from '../../../../shared/styles/spacing';
+import {SHADOWS} from '../../../../shared/styles/shadows';
 
 export const styles = StyleSheet.create({
-  container: {
-    padding: SPACING.lg,
+  formCard: {
+    margin: SPACING.lg,
+    borderRadius: 12,
+    backgroundColor: COLORS.surface,
+    ...SHADOWS.md,
+  },
+  formTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: COLORS.textPrimary,
+    marginBottom: SPACING.xl,
   },
   input: {
     marginBottom: SPACING.xs,
     backgroundColor: COLORS.surface,
   },
-  dateRow: {
+  rowFields: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: SPACING.xs,
+    gap: SPACING.md,
   },
-  dateInput: {
+  halfField: {
     flex: 1,
-    backgroundColor: COLORS.surface,
-  },
-  dateButton: {
-    marginLeft: SPACING.sm,
-    marginTop: SPACING.sm,
   },
   submitButton: {
-    marginTop: SPACING.xxl,
+    marginTop: SPACING.xl,
     borderRadius: 10,
     paddingVertical: SPACING.sm,
     backgroundColor: COLORS.primary,

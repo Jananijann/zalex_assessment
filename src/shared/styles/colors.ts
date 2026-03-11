@@ -1,10 +1,10 @@
 export const COLORS = {
-  // Primary — Indigo (Tailwind UI)
-  primary: '#4F46E5', // indigo-600
-  primaryDark: '#3730A3', // indigo-800
-  primaryLight: '#EEF2FF', // indigo-50
-  secondary: '#6366F1', // indigo-500
-  secondaryLight: '#E0E7FF', // indigo-100
+  // Primary — Violet (Tailwind UI)
+  primary: '#7C3AED', // violet-600
+  primaryDark: '#5B21B6', // violet-800
+  primaryLight: '#F5F3FF', // violet-50
+  secondary: '#8B5CF6', // violet-500
+  secondaryLight: '#EDE9FE', // violet-100
   accent: '#22C55E', // green-500
 
   // Backgrounds — Slate (Tailwind UI)
@@ -14,7 +14,8 @@ export const COLORS = {
   // Text — Slate
   textPrimary: '#0F172A', // slate-900
   textSecondary: '#64748B', // slate-500
-  textDisabled: '#94A3B8', // slate-400
+  textTertiary: '#94A3B8', // slate-400
+  textDisabled: '#CBD5E1', // slate-300
 
   // Borders — Slate
   border: '#E2E8F0', // slate-200
@@ -46,11 +47,11 @@ export const COLORS = {
   statusDoneLight: '#ECFDF5', // emerald-50
 
   // Header
-  headerBackground: '#4F46E5', // indigo-600
+  headerBackground: '#7C3AED', // violet-600
   headerText: '#FFFFFF',
 
   // Components
-  fabBackground: '#4F46E5', // indigo-600
+  fabBackground: '#7C3AED', // violet-600
   chipText: '#FFFFFF',
   skeleton: '#E2E8F0', // slate-200
   skeletonHighlight: '#F1F5F9', // slate-100

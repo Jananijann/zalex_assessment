@@ -1,7 +1,10 @@
-import React, {createContext, useContext, useState, useCallback, useMemo} from 'react';
+import React, {createContext, useContext, useState, useCallback, useMemo, useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AppTheme} from './theme';
 import {lightTheme} from './lightTheme';
 import {darkTheme} from './darkTheme';
+
+const THEME_STORAGE_KEY = '@app_theme_preference';
 
 interface ThemeContextValue {
   theme: AppTheme;
@@ -22,8 +25,20 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
   const [isDark, setIsDark] = useState(false);
 
+  useEffect(() => {
+    AsyncStorage.getItem(THEME_STORAGE_KEY).then(value => {
+      if (value === 'dark') {
+        setIsDark(true);
+      }
+    });
+  }, []);
+
   const toggleTheme = useCallback(() => {
-    setIsDark(prev => !prev);
+    setIsDark(prev => {
+      const newValue = !prev;
+      AsyncStorage.setItem(THEME_STORAGE_KEY, newValue ? 'dark' : 'light');
+      return newValue;
+    });
   }, []);
 
   const value = useMemo(
@@ -41,4 +56,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({children}) => {
 export function useTheme(): ThemeContextValue {
   const context = useContext(ThemeContext);
   return context;
+}
+
+export function useColors() {
+  const {theme} = useTheme();
+  return theme.colors;
 }
