@@ -24,10 +24,30 @@ A React Native mobile application that allows employees to request, track, and p
 | :---------------------------------------------------------------: |
 | ![Cert](screenshots/android/darkTheme/RequestDetailsWithCert.png) |
 
+### iOS — Light Theme
+
+|                    Requests List                    |                    New Request                    |                  Request Details                   |                    PDF Preview                    |
+| :-------------------------------------------------: | :-----------------------------------------------: | :------------------------------------------------: | :-----------------------------------------------: |
+| ![List](screenshots/ios/lightTheme/RequestList.png) | ![New](screenshots/ios/lightTheme/NewRequest.png) | ![Details](screenshots/ios/lightTheme/Details.png) | ![PDF](screenshots/ios/lightTheme/loadingPdf.png) |
+
+|                Details with Certificate                |
+| :----------------------------------------------------: |
+| ![Cert](screenshots/ios/lightTheme/DetailsWithDoc.png) |
+
+### iOS — Dark Theme
+
+|                Requests List                 |                   New Request                    |                     Request Details                      |
+| :------------------------------------------: | :----------------------------------------------: | :------------------------------------------------------: |
+| ![List](screenshots/ios/darkTheme/Lists.png) | ![New](screenshots/ios/darkTheme/NewRequest.png) | ![Details](screenshots/ios/darkTheme/RequestDetails.png) |
+
+|                Details with Certificate                |
+| :----------------------------------------------------: |
+| ![Cert](screenshots/ios/darkTheme/DetailsWithCert.png) |
+
 ## Node.js Version
 
 ```
-Node.js >= 18.x
+Node.js >= 20.x
 ```
 
 ## Dependencies
