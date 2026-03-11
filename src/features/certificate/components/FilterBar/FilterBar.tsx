@@ -1,19 +1,12 @@
 import React, {useState} from 'react';
 import {View, TextInput as RNTextInput} from 'react-native';
-import {Text, Menu, Button} from 'react-native-paper';
+import {Text, Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SortField} from '@features/certificate/utils/common';
 import {STRINGS} from '../../../../shared/constants/strings';
 import {useColors} from '../../../../shared/theme';
 import {styles} from './styles';
 import {FilterBarProps} from './types';
-
-const STATUSES = [
-  STRINGS.statusNew,
-  STRINGS.statusPending,
-  STRINGS.statusUnderReview,
-  STRINGS.statusDone,
-];
 
 const FilterBar: React.FC<FilterBarProps> = ({
   searchQuery,
@@ -27,7 +20,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
   const colors = useColors();
   const [addressTo, setAddressTo] = useState('');
   const [status, setStatus] = useState('');
-  const [statusMenuVisible, setStatusMenuVisible] = useState(false);
 
   const handleClear = () => {
     setAddressTo('');
@@ -93,50 +85,6 @@ const FilterBar: React.FC<FilterBarProps> = ({
               style={[styles.textInput, {color: colors.textPrimary}]}
             />
           </View>
-        </View>
-      </View>
-
-      <View style={styles.statusSortRow}>
-        <View style={styles.statusWrapper}>
-          <Text style={[styles.inputLabel, {color: colors.textSecondary}]}>
-            {STRINGS.filterStatus}
-          </Text>
-          <Menu
-            visible={statusMenuVisible}
-            onDismiss={() => setStatusMenuVisible(false)}
-            anchor={
-              <Button
-                mode="outlined"
-                onPress={() => setStatusMenuVisible(true)}
-                style={[styles.dropdownButton, {borderColor: colors.border}]}
-                labelStyle={[styles.dropdownLabel, {color: colors.textPrimary}]}
-                contentStyle={styles.dropdownContent}
-                icon={() => <Icon name="chevron-down" size={16} color={colors.textSecondary} />}
-              >
-                {status || STRINGS.filterAllStatuses}
-              </Button>
-            }
-          >
-            <Menu.Item
-              onPress={() => {
-                setStatus('');
-                setStatusMenuVisible(false);
-                onApplyFilters({address_to: addressTo || undefined});
-              }}
-              title={STRINGS.filterAllStatuses}
-            />
-            {STATUSES.map(s => (
-              <Menu.Item
-                key={s}
-                onPress={() => {
-                  setStatus(s);
-                  setStatusMenuVisible(false);
-                  onApplyFilters({address_to: addressTo || undefined, status: s});
-                }}
-                title={s}
-              />
-            ))}
-          </Menu>
         </View>
       </View>
 

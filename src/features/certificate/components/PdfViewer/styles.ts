@@ -4,7 +4,16 @@ import {SPACING} from '../../../../shared/styles';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: SPACING.lg,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.md,
+  },
+  pdfContainer: {
+    flex: 1,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  pdfContent: {
+    flex: 1,
   },
   centerContent: {
     justifyContent: 'center',
@@ -15,10 +24,14 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
   },
   loadingOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1,
+    zIndex: 10,
   },
   loadingText: {
     marginTop: SPACING.md,

@@ -42,11 +42,7 @@ export function useRequestFilters(requests: CertificateRequest[]) {
     const query = (searchQuery ?? '').toLowerCase().trim();
 
     if (query && result.length) {
-      result = result.filter(r =>
-        String(r?.reference_no ?? '')
-          .toLowerCase()
-          .includes(query),
-      );
+      result = result.filter(r => String(r?.reference_no ?? '').toLowerCase() === query);
     }
 
     result = filterRequests(result, filterCriteria);
