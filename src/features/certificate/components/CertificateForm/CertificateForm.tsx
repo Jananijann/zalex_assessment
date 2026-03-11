@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Platform, Pressable, Text as RNText} from 'react-native';
-import {Button, Text, Card} from 'react-native-paper';
+import {Button, Card} from 'react-native-paper';
 import DateTimePicker, {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {STRINGS} from '../../../../shared/constants/strings';
