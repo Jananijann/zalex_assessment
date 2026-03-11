@@ -5,8 +5,8 @@ import {
   validateEmployeeId,
   validateForm,
   isFormValid,
-} from '../features/certificate/validation';
-import {STRINGS} from '../shared/constants/strings';
+} from '../utils/validation';
+import {STRINGS} from '../../../shared/constants/strings';
 
 describe('validateAddressTo', () => {
   it('returns error when empty', () => {

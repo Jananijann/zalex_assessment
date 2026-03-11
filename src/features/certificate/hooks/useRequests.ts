@@ -2,7 +2,7 @@ import {useEffect, useCallback, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../../app/rootReducer';
 import {AppDispatch} from '../../../app/store';
-import {fetchRequests, updatePurpose} from '../slice';
+import {fetchRequests, updatePurpose} from '../redux/slice';
 
 export function useRequests() {
   const dispatch = useDispatch<AppDispatch>();

@@ -1,5 +1,5 @@
-import certificateReducer, {updatePurpose} from '../features/certificate/redux/slice';
-import {CertificateState} from '../features/certificate/services/types';
+import certificateReducer, {updatePurpose} from '../certificate/redux/slice';
+import {CertificateState} from '../certificate/services/types';
 
 const initialState: CertificateState = {
   requests: [
@@ -63,7 +63,7 @@ describe('updatePurpose reducer', () => {
       purpose: 'This should not be updated because the request is In Progress',
     });
     const state = certificateReducer(initialState, action);
-    const request = state.requests.find((r: any) => r.reference_no === 'REF003');
+    const request = state.requests.find(r => r.reference_no === 'REF003');
     expect(request?.purpose).toBe('Study abroad application purpose text that is long enough');
   });
 
@@ -84,7 +84,7 @@ describe('updatePurpose reducer', () => {
       purpose: newPurpose,
     });
     const state = certificateReducer(initialState, action);
-    expect(state.requests.find((r: any) => r.reference_no === 'REF001')?.purpose).toBe(newPurpose);
+    expect(state.requests.find(r => r.reference_no === 'REF001')?.purpose).toBe(newPurpose);
     // State updated synchronously — no loading state changed
     expect(state.loading).toBe(false);
     expect(state.submitLoading).toBe(false);

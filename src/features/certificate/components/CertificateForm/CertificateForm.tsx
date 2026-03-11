@@ -1,32 +1,16 @@
 import React, {useState} from 'react';
-import {View, Platform, Text as RNText} from 'react-native';
-import {TextInput, Button, HelperText, Text, Card} from 'react-native-paper';
+import {View, Platform, Pressable, Text as RNText} from 'react-native';
+import {Button, Text, Card} from 'react-native-paper';
 import DateTimePicker, {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {useColors} from '../../../../theme';
-import {ValidationErrors} from '../../../../types';
-import CharacterCounter from '../CharacterCounter';
+import {useColors} from '../../../../shared/theme';
+import CharacterCounter from '../../../../shared/components/CharacterCounter';
+import ThemedTextInput from '../../../../shared/components/ThemedTextInput';
 import {styles} from './styles';
+import {CertificateFormProps} from './types';
 
 const srOnly = {position: 'absolute' as const, width: 1, height: 1, overflow: 'hidden' as const};
-
-interface CertificateFormProps {
-  addressTo: string;
-  purpose: string;
-  issuedOn: string;
-  employeeId: string;
-  errors: ValidationErrors;
-  touched: Record<string, boolean>;
-  formValid: boolean;
-  submitting: boolean;
-  onChangeAddressTo: (value: string) => void;
-  onChangePurpose: (value: string) => void;
-  onChangeIssuedOn: (value: string) => void;
-  onChangeEmployeeId: (value: string) => void;
-  onBlur: (field: keyof ValidationErrors) => void;
-  onSubmit: () => void;
-}
 
 const CertificateForm: React.FC<CertificateFormProps> = ({
   addressTo,
@@ -82,22 +66,15 @@ const CertificateForm: React.FC<CertificateFormProps> = ({
   return (
     <Card style={[styles.formCard, {backgroundColor: colors.surface}]}>
       <Card.Content>
-        <Text style={[styles.formTitle, {color: colors.textPrimary}]}>New Certificate Request</Text>
-
-        <TextInput
+        <ThemedTextInput
           label={STRINGS.labelAddressTo}
           value={addressTo}
           onChangeText={onChangeAddressTo}
           onBlur={() => onBlur('address_to')}
-          mode="outlined"
-          style={[styles.input, {backgroundColor: colors.surface}]}
           placeholder={STRINGS.placeholderAddressTo}
           multiline
-          numberOfLines={2}
-          error={!!addressToError}
-          outlineColor={colors.border}
-          activeOutlineColor={colors.primary}
-          textColor={colors.textPrimary}
+          numberOfLines={3}
+          error={addressToError}
           accessibilityLabel={STRINGS.labelAddressTo}
           accessibilityHint={STRINGS.placeholderAddressTo}
         />
@@ -106,24 +83,16 @@ const CertificateForm: React.FC<CertificateFormProps> = ({
             {errors.address_to}
           </RNText>
         )}
-        <HelperText type="error" visible={!!addressToError}>
-          {errors.address_to}
-        </HelperText>
 
-        <TextInput
+        <ThemedTextInput
           label={STRINGS.labelPurpose}
           value={purpose}
           onChangeText={onChangePurpose}
           onBlur={() => onBlur('purpose')}
-          mode="outlined"
-          style={[styles.input, {backgroundColor: colors.surface}]}
           placeholder={STRINGS.placeholderPurpose}
           multiline
           numberOfLines={4}
-          error={!!purposeError}
-          outlineColor={colors.border}
-          activeOutlineColor={colors.primary}
-          textColor={colors.textPrimary}
+          error={purposeError}
           accessibilityLabel={STRINGS.labelPurpose}
           accessibilityHint={STRINGS.placeholderPurpose}
         />
@@ -133,57 +102,40 @@ const CertificateForm: React.FC<CertificateFormProps> = ({
             {errors.purpose}
           </RNText>
         )}
-        <HelperText type="error" visible={!!purposeError}>
-          {errors.purpose}
-        </HelperText>
 
         <View style={styles.rowFields}>
           <View style={styles.halfField}>
-            <TextInput
-              label={STRINGS.labelIssuedOn}
-              value={issuedOn}
-              mode="outlined"
-              style={[styles.input, {backgroundColor: colors.surface}]}
-              editable={false}
-              error={!!issuedOnError}
-              outlineColor={colors.border}
-              activeOutlineColor={colors.primary}
-              textColor={colors.textPrimary}
+            <Pressable
+              onPress={() => {
+                onBlur('issued_on');
+                setShowDatePicker(true);
+              }}
+              accessibilityRole="button"
               accessibilityLabel={STRINGS.labelIssuedOn}
-              accessibilityHint="Tap the calendar icon to select a date"
-              right={
-                <TextInput.Icon
-                  icon="calendar"
-                  onPress={() => setShowDatePicker(true)}
-                  color={colors.primary}
-                  accessibilityLabel={STRINGS.buttonSelectDate}
-                />
-              }
-            />
-            {!!issuedOnError && (
-              <RNText accessibilityRole="alert" style={srOnly}>
-                {errors.issued_on}
-              </RNText>
-            )}
-            <HelperText type="error" visible={!!issuedOnError}>
-              {errors.issued_on}
-            </HelperText>
+              accessibilityHint="Tap to select a date"
+            >
+              <ThemedTextInput
+                label={STRINGS.labelIssuedOn}
+                value={issuedOn}
+                placeholder="MM/DD/YYYY"
+                error={issuedOnError}
+                onPress={() => {
+                  onBlur('issued_on');
+                  setShowDatePicker(true);
+                }}
+              />
+            </Pressable>
           </View>
 
           <View style={styles.halfField}>
-            <TextInput
+            <ThemedTextInput
               label={STRINGS.labelEmployeeId}
               value={employeeId}
               onChangeText={onChangeEmployeeId}
               onBlur={() => onBlur('employee_id')}
-              mode="outlined"
-              style={[styles.input, {backgroundColor: colors.surface}]}
               placeholder={STRINGS.placeholderEmployeeId}
               keyboardType="numeric"
-              error={!!employeeIdError}
-              outlineColor={colors.border}
-              activeOutlineColor={colors.primary}
-              textColor={colors.textPrimary}
+              error={employeeIdError}
               accessibilityLabel={STRINGS.labelEmployeeId}
               accessibilityHint={STRINGS.placeholderEmployeeId}
             />
@@ -192,9 +144,6 @@ const CertificateForm: React.FC<CertificateFormProps> = ({
                 {errors.employee_id}
               </RNText>
             )}
-            <HelperText type="error" visible={!!employeeIdError}>
-              {errors.employee_id}
-            </HelperText>
           </View>
         </View>
 

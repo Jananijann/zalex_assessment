@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {STRINGS} from '../shared/constants/strings';
-import {useTheme, useColors} from '../theme';
+import {useTheme, useColors} from '../shared/theme';
 import RequestsListScreen from '../features/certificate/screens/RequestsListScreen';
 import RequestCertificateScreen from '../features/certificate/screens/RequestCertificateScreen';
 import RequestDetailsScreen from '../features/certificate/screens/RequestDetailsScreen';

@@ -2,15 +2,11 @@ import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {Text, Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useColors} from '../../../../theme';
-import {STRINGS} from '../../../../shared/constants/strings';
-import {announceForAccessibility} from '../../../../shared/utils/accessibility';
+import {useColors} from '../../theme';
+import {STRINGS} from '../../constants/strings';
+import {announceForAccessibility} from '../../utils/accessibility';
 import {styles} from './styles';
-
-interface ErrorStateProps {
-  message: string;
-  onRetry?: () => void;
-}
+import {ErrorStateProps} from './types';
 
 const ErrorState: React.FC<ErrorStateProps> = ({message, onRetry}) => {
   const colors = useColors();

@@ -1,16 +1,10 @@
 import React, {useMemo} from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {Text} from 'react-native-paper';
-import {CertificateRequest} from '../../../../types';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {styles} from './styles';
-
-interface StatusSummaryCardProps {
-  requests: CertificateRequest[];
-  activeStatus: string | null;
-  onStatusPress: (status: string | null) => void;
-}
+import {StatusSummaryCardProps} from './types';
 
 const STATUS_KEYS = [
   STRINGS.statusNew,
@@ -81,7 +75,7 @@ const StatusSummaryCard: React.FC<StatusSummaryCardProps> = ({
           styles.card,
           {backgroundColor: config.bg},
           isActive && styles.cardActive,
-          isActive && {borderWidth: 2, borderColor: config.accent},
+          isActive && {borderColor: config.accent},
         ]}
       >
         <Text style={[styles.count, {color: config.accent}]}>{counts[config.key] || 0}</Text>

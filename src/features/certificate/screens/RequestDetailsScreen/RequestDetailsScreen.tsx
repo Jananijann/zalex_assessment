@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
-import {ScrollView, View, Alert, Text as RNText} from 'react-native';
-import {Text, Card, Button, TextInput, HelperText} from 'react-native-paper';
+import {ScrollView, View, Text as RNText} from 'react-native';
+import {Text, Card, Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {CertificateRequest} from '../../services/types';
 import {useRequests} from '../../hooks/useRequests';
-import {CertificateRequest} from '../../../../types';
-import {validatePurpose} from '../../validation';
+import {validatePurpose} from '../../utils/validation';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {announceForAccessibility} from '../../../../shared/utils/accessibility';
 import StatusBadge from '../../components/StatusBadge';
-import CharacterCounter from '../../components/CharacterCounter';
+import CharacterCounter from '../../../../shared/components/CharacterCounter';
+import ThemedTextInput from '../../../../shared/components/ThemedTextInput';
+import SuccessModal from '../../../../shared/components/SuccessModal';
 import {styles} from './styles';
 
 const srOnly = {position: 'absolute' as const, width: 1, height: 1, overflow: 'hidden' as const};
@@ -27,6 +29,7 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
   const [editing, setEditing] = useState(false);
   const [purposeText, setPurposeText] = useState(request.purpose);
   const [purposeError, setPurposeError] = useState<string | undefined>();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const canEdit = request.status === STRINGS.statusNew;
   const isDone = request.status === STRINGS.statusDone;
@@ -41,17 +44,15 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
     if (request.reference_no) {
       editPurpose(request.reference_no, purposeText);
       announceForAccessibility(STRINGS.messagePurposeUpdated);
-      Alert.alert(STRINGS.messageSuccess, STRINGS.messagePurposeUpdated, [
-        {
-          text: STRINGS.messageOk,
-          onPress: () => {
-            refresh();
-            navigation.navigate('RequestsList');
-          },
-        },
-      ]);
       setEditing(false);
+      setShowSuccessModal(true);
     }
+  };
+
+  const handleSuccessModalClose = () => {
+    setShowSuccessModal(false);
+    refresh();
+    navigation.navigate('RequestsList');
   };
 
   return (
@@ -112,20 +113,19 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
           </Text>
           {editing ? (
             <View style={styles.editSection}>
-              <TextInput
+              <ThemedTextInput
+                label=""
                 value={purposeText}
                 onChangeText={text => {
                   setPurposeText(text);
-                  setPurposeError(validatePurpose(text));
+                  if (purposeError) {
+                    setPurposeError(validatePurpose(text));
+                  }
                 }}
-                mode="outlined"
+                onBlur={() => setPurposeError(validatePurpose(purposeText))}
                 multiline
                 numberOfLines={4}
-                error={!!purposeError}
-                style={[styles.editInput, {backgroundColor: colors.surface}]}
-                outlineColor={colors.border}
-                activeOutlineColor={colors.primary}
-                textColor={colors.textPrimary}
+                error={purposeError}
                 accessibilityLabel="Edit purpose"
                 accessibilityHint="Enter the updated purpose text"
               />
@@ -135,9 +135,6 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
                   {purposeError}
                 </RNText>
               )}
-              <HelperText type="error" visible={!!purposeError}>
-                {purposeError}
-              </HelperText>
               <View style={styles.editButtons}>
                 <Button
                   mode="contained"
@@ -156,6 +153,7 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
                     setPurposeError(undefined);
                   }}
                   style={[styles.cancelButton, {borderColor: colors.border}]}
+                  textColor={colors.textSecondary}
                 >
                   {STRINGS.buttonCancel}
                 </Button>
@@ -164,9 +162,7 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
           ) : (
             <View>
               <View style={[styles.purposeBox, {backgroundColor: colors.borderLight}]}>
-                <Text style={[styles.purposeText, {color: colors.textPrimary}]}>
-                  {request.purpose}
-                </Text>
+                <Text style={[styles.purposeText, {color: colors.textPrimary}]}>{purposeText}</Text>
               </View>
               {canEdit && (
                 <Button
@@ -208,9 +204,9 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
                 onPress={() => navigation.navigate('PdfPreview')}
                 style={[styles.downloadButton, {borderColor: colors.primary}]}
                 textColor={colors.primary}
-                icon={({size, color}) => <Icon name="download" size={size} color={color} />}
+                icon={({size, color}) => <Icon name="eye-outline" size={size} color={color} />}
               >
-                Download PDF
+                {STRINGS.buttonPreviewPdf}
               </Button>
             </View>
           </Card.Content>
@@ -226,6 +222,14 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
           </Card.Content>
         </Card>
       )}
+
+      <SuccessModal
+        visible={showSuccessModal}
+        title={STRINGS.messageSuccess}
+        message={STRINGS.messagePurposeUpdated}
+        buttonText={STRINGS.messageOk}
+        onPress={handleSuccessModalClose}
+      />
     </ScrollView>
   );
 };

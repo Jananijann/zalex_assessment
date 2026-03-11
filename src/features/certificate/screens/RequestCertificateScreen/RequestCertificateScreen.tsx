@@ -1,27 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, Alert} from 'react-native';
+import {NavProps} from '@shared/types/common';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {announceForAccessibility} from '../../../../shared/utils/accessibility';
 import {useRequestForm} from '../../hooks/useRequestForm';
 import CertificateForm from '../../components/CertificateForm';
+import SuccessModal from '../../../../shared/components/SuccessModal';
 import {styles} from './styles';
 
-interface Props {
-  navigation: any;
-}
-
-const RequestCertificateScreen: React.FC<Props> = ({navigation}) => {
+const RequestCertificateScreen: React.FC<NavProps> = ({navigation}) => {
   const colors = useColors();
   const form = useRequestForm();
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async () => {
     const success = await form.handleSubmit();
     if (success) {
       announceForAccessibility(STRINGS.messageSubmitSuccess);
-      Alert.alert(STRINGS.messageSuccess, STRINGS.messageSubmitSuccess, [
-        {text: STRINGS.messageOk, onPress: () => navigation.goBack()},
-      ]);
+      setShowSuccess(true);
     } else if (!form.formValid) {
       announceForAccessibility('Please fix the form errors before submitting');
     } else {
@@ -50,6 +47,16 @@ const RequestCertificateScreen: React.FC<Props> = ({navigation}) => {
         onChangeEmployeeId={form.handleChangeEmployeeId}
         onBlur={form.handleBlur}
         onSubmit={handleSubmit}
+      />
+      <SuccessModal
+        visible={showSuccess}
+        title={STRINGS.messageSuccess}
+        message={STRINGS.messageSubmitSuccess}
+        buttonText={STRINGS.messageOk}
+        onPress={() => {
+          setShowSuccess(false);
+          navigation.goBack();
+        }}
       />
     </ScrollView>
   );

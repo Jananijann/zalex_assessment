@@ -1,6 +1,5 @@
 import {StyleSheet} from 'react-native';
 import {SPACING} from '../../../../shared/styles';
-import {SHADOWS} from '../../../../shared/styles/shadows';
 
 export const styles = StyleSheet.create({
   container: {
@@ -20,10 +19,11 @@ export const styles = StyleSheet.create({
     paddingVertical: SPACING.md,
     paddingHorizontal: SPACING.md,
     alignItems: 'center',
-    ...SHADOWS.sm,
+    elevation: 0,
+    shadowOpacity: 0,
   },
   cardActive: {
-    ...SHADOWS.lg,
+    borderWidth: 2,
   },
   count: {
     fontSize: 24,

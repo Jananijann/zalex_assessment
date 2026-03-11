@@ -1,5 +1,5 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import certificateReducer from '../features/certificate/slice';
+import certificateReducer from '../features/certificate/redux/slice';
 
 const rootReducer = combineReducers({
   certificate: certificateReducer,

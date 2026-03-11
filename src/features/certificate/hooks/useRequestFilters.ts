@@ -1,6 +1,15 @@
 import {useState, useCallback, useMemo} from 'react';
-import {CertificateRequest, FilterCriteria, SortField, SortOrder} from '../../../types';
-import {filterRequests, sortRequests} from '../filters';
+import {CertificateRequest} from '../services/types';
+import {filterRequests, sortRequests} from '../helpers/filters';
+
+interface FilterCriteria {
+  reference_no?: string;
+  address_to?: string;
+  status?: string;
+}
+
+type SortField = 'issued_on' | 'status';
+type SortOrder = 'asc' | 'desc';
 
 export function useRequestFilters(requests: CertificateRequest[]) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,17 +37,21 @@ export function useRequestFilters(requests: CertificateRequest[]) {
   }, []);
 
   const processedRequests = useMemo(() => {
-    let result = requests;
+    let result: CertificateRequest[] = (requests ?? []).filter(r => r && typeof r === 'object');
 
-    if (searchQuery.trim()) {
-      result = result.filter(
-        r =>
-          r.reference_no && r.reference_no.toLowerCase().includes(searchQuery.toLowerCase().trim()),
+    const query = (searchQuery ?? '').toLowerCase().trim();
+
+    if (query && result.length) {
+      result = result.filter(r =>
+        String(r?.reference_no ?? '')
+          .toLowerCase()
+          .includes(query),
       );
     }
 
     result = filterRequests(result, filterCriteria);
     result = sortRequests(result, sortField, sortOrder);
+
     return result;
   }, [requests, searchQuery, filterCriteria, sortField, sortOrder]);
 

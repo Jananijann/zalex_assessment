@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
-import {CertificateRequest, CertificateState} from '../../types';
-import {createCertificateRequest, fetchCertificateRequests} from './services/certificateService';
+import {CertificateRequest, CertificateState} from '../services/types';
+import {createCertificateRequest, fetchCertificateRequests} from '../services/certificateService';
 
 const initialState: CertificateState = {
   requests: [],

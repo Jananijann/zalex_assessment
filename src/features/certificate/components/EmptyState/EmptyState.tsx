@@ -2,13 +2,10 @@ import React from 'react';
 import {View} from 'react-native';
 import {Text, Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {STRINGS} from '../../../../shared/constants/strings';
 import {styles} from './styles';
-
-interface EmptyStateProps {
-  onCreatePress?: () => void;
-}
+import {EmptyStateProps} from './types';
 
 const EmptyState: React.FC<EmptyStateProps> = ({onCreatePress}) => {
   const colors = useColors();

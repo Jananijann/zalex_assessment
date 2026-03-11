@@ -2,16 +2,11 @@ import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {CertificateRequest} from '../../../../types';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {STRINGS} from '../../../../shared/constants/strings';
 import StatusBadge from '../StatusBadge';
 import {styles} from './styles';
-
-interface RequestCardProps {
-  request: CertificateRequest;
-  onPress: () => void;
-}
+import {RequestCardProps} from './types';
 
 function getStatusBorderColor(
   status: string | undefined,

@@ -1,12 +1,14 @@
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../../../../shared/styles/colors';
 import {SPACING} from '../../../../shared/styles';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
     padding: SPACING.lg,
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   pdf: {
     flex: 1,
@@ -16,7 +18,23 @@ export const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.background,
     zIndex: 1,
+  },
+  loadingText: {
+    marginTop: SPACING.md,
+    fontSize: 14,
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: SPACING.md,
+  },
+  errorMessage: {
+    fontSize: 14,
+    marginTop: SPACING.sm,
+    textAlign: 'center',
+  },
+  retryButton: {
+    marginTop: SPACING.lg,
   },
 });

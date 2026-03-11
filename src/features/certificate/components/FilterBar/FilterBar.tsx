@@ -2,20 +2,11 @@ import React, {useState} from 'react';
 import {View, TextInput as RNTextInput} from 'react-native';
 import {Text, Menu, Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {FilterCriteria, SortField, SortOrder} from '../../../../types';
+import {SortField} from '@features/certificate/utils/common';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {styles} from './styles';
-
-interface FilterBarProps {
-  searchQuery: string;
-  onSearchChange: (text: string) => void;
-  onApplyFilters: (criteria: FilterCriteria) => void;
-  onClearFilters: () => void;
-  sortField: SortField;
-  sortOrder: SortOrder;
-  onSort: (field: SortField, order: SortOrder) => void;
-}
+import {FilterBarProps} from './types';
 
 const STATUSES = [
   STRINGS.statusNew,
@@ -65,7 +56,12 @@ const FilterBar: React.FC<FilterBarProps> = ({
           <Text style={[styles.inputLabel, {color: colors.textSecondary}]}>
             {STRINGS.filterReferenceNo}
           </Text>
-          <View style={[styles.inputContainer, {borderColor: colors.border}]}>
+          <View
+            style={[
+              styles.inputContainer,
+              {borderColor: colors.border, backgroundColor: colors.surface},
+            ]}
+          >
             <RNTextInput
               value={searchQuery}
               onChangeText={onSearchChange}
@@ -80,7 +76,12 @@ const FilterBar: React.FC<FilterBarProps> = ({
           <Text style={[styles.inputLabel, {color: colors.textSecondary}]}>
             {STRINGS.filterAddressTo}
           </Text>
-          <View style={[styles.inputContainer, {borderColor: colors.border}]}>
+          <View
+            style={[
+              styles.inputContainer,
+              {borderColor: colors.border, backgroundColor: colors.surface},
+            ]}
+          >
             <RNTextInput
               value={addressTo}
               onChangeText={text => {

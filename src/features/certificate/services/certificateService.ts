@@ -1,6 +1,7 @@
-import {api} from '../../../services/api';
-import {ENDPOINTS} from '../../../services/endpoints';
-import {CertificateRequest, ApiResponse} from '../../../types';
+import {api} from '../../../shared/services/api';
+import {ENDPOINTS} from '../../../shared/services/endpoints';
+import {ApiResponse} from '../../../shared/types';
+import {CertificateRequest} from './types';
 
 export async function createCertificateRequest(
   request: Omit<CertificateRequest, 'reference_no' | 'status'>,

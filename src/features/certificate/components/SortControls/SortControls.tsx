@@ -1,15 +1,10 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
-import {SortField, SortOrder} from '../../../../types';
+import {SortField} from '@features/certificate/utils/common';
 import {STRINGS} from '../../../../shared/constants/strings';
 import {styles} from './styles';
-
-interface SortControlsProps {
-  currentField: SortField;
-  currentOrder: SortOrder;
-  onSort: (field: SortField, order: SortOrder) => void;
-}
+import {SortControlsProps} from './types';
 
 const SortControls: React.FC<SortControlsProps> = ({currentField, currentOrder, onSort}) => {
   const handleToggle = (field: SortField) => {

@@ -1,24 +1,21 @@
 import React, {useCallback, useState} from 'react';
 import {View, FlatList, RefreshControl} from 'react-native';
 import {Text, FAB} from 'react-native-paper';
-import {CertificateRequest} from '../../../../types';
+import {NavProps} from '@shared/types/common';
+import {CertificateRequest} from '../../services/types';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {useRequests} from '../../hooks/useRequests';
 import {useRequestFilters} from '../../hooks/useRequestFilters';
 import StatusSummaryCard from '../../components/StatusSummaryCard';
 import SkeletonCard from '../../components/SkeletonCard';
 import EmptyState from '../../components/EmptyState';
-import ErrorState from '../../components/ErrorState';
+import ErrorState from '../../../../shared/components/ErrorState';
 import RequestCard from '../../components/RequestCard';
 import FilterBar from '../../components/FilterBar';
 import {styles} from './styles';
 
-interface Props {
-  navigation: any;
-}
-
-const RequestsListScreen: React.FC<Props> = ({navigation}) => {
+const RequestsListScreen: React.FC<NavProps> = ({navigation}) => {
   const colors = useColors();
   const {requests, loading, error, refresh, refreshing, onRefresh} = useRequests();
   const filters = useRequestFilters(requests);

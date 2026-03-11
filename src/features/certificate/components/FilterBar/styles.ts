@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: SPACING.md,
+    marginTop: SPACING.md,
   },
   title: {
     fontSize: 15,

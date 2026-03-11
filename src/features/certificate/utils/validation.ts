@@ -1,6 +1,11 @@
-import {ValidationErrors} from '../../types';
-import {STRINGS} from '../../shared/constants/strings';
-export type {ValidationErrors};
+import {STRINGS} from '../../../shared/constants/strings';
+
+export interface ValidationErrors {
+  address_to?: string;
+  purpose?: string;
+  issued_on?: string;
+  employee_id?: string;
+}
 
 export function validateAddressTo(value: string): string | undefined {
   if (!value || value.length === 0) {

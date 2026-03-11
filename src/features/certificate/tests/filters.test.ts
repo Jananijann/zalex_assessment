@@ -1,5 +1,5 @@
-import {filterRequests, sortRequests} from '../features/certificate/helpers/filters';
-import {CertificateRequest} from '../features/certificate/services/types';
+import {filterRequests, sortRequests} from '../helpers/filters';
+import {CertificateRequest} from '../services/types';
 
 const mockRequests: CertificateRequest[] = [
   {

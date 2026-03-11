@@ -1,13 +1,9 @@
 import React from 'react';
 import {View} from 'react-native';
 import {Text} from 'react-native-paper';
-import {STRINGS} from '../../../../shared/constants/strings';
+import {STRINGS} from '../../constants/strings';
 import {styles} from './styles';
-
-interface CharacterCounterProps {
-  current: number;
-  minimum: number;
-}
+import {CharacterCounterProps} from './types';
 
 const CharacterCounter: React.FC<CharacterCounterProps> = ({current, minimum}) => {
   const isValid = current >= minimum;

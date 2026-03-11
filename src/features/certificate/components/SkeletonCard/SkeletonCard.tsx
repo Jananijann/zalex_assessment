@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {View, Animated} from 'react-native';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {styles} from './styles';
 
 const SkeletonCard: React.FC = () => {

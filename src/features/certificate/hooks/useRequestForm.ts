@@ -1,7 +1,7 @@
 import {useState, useCallback, useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../app/store';
-import {submitRequest} from '../slice';
+import {submitRequest} from '../redux/slice';
 import {
   validateForm,
   isFormValid,
@@ -9,8 +9,8 @@ import {
   validatePurpose,
   validateIssuedOn,
   validateEmployeeId,
-} from '../validation';
-import {ValidationErrors} from '../../../types';
+} from '../utils/validation';
+import {ValidationErrors} from '../../certificate/services/types';
 
 export function useRequestForm() {
   const dispatch = useDispatch<AppDispatch>();

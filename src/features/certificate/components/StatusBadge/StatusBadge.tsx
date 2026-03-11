@@ -2,12 +2,9 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {STRINGS} from '../../../../shared/constants/strings';
-import {useColors} from '../../../../theme';
+import {useColors} from '../../../../shared/theme';
 import {styles} from './styles';
-
-interface StatusBadgeProps {
-  status: string;
-}
+import {StatusBadgeProps} from './types';
 
 const STATUS_ICONS: Record<string, string> = {
   [STRINGS.statusNew]: 'file-document-outline',

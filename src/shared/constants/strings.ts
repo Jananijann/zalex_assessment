@@ -12,9 +12,9 @@ export const STRINGS = {
   labelPurpose: 'Purpose *',
   labelIssuedOn: 'Issued On *',
   labelEmployeeId: 'Employee ID *',
-  placeholderAddressTo: 'Enter recipient address',
+  placeholderAddressTo: 'Enter address',
   placeholderPurpose: 'Describe the purpose of this certificate (min 50 characters)',
-  placeholderEmployeeId: 'Enter your employee ID',
+  placeholderEmployeeId: 'Enter your ID',
 
   // Validation messages
   errorAddressToRequired: 'Address To is required.',
