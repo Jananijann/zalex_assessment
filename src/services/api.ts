@@ -1,9 +1,8 @@
 import axios from 'axios';
-
-const API_KEY = '47c395bf73324dc48473112f598220df';
+import {Config} from 'react-native-config';
 
 export const api = axios.create({
-  baseURL: 'https://zalexinc.azure-api.net',
+  baseURL: Config.API_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -12,7 +11,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(config => {
   const separator = config.url?.includes('?') ? '&' : '?';
-  config.url = `${config.url}${separator}subscription-key=${API_KEY}`;
+  config.url = `${config.url}${separator}subscription-key=${Config.API_KEY}`;
   return config;
 });
 
