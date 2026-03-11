@@ -1,11 +1,19 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, ActivityIndicator, Platform, Image} from 'react-native';
 import {Text, Button} from 'react-native-paper';
 import Pdf from 'react-native-pdf';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useColors} from '../../../../shared/theme';
 import {styles} from './styles';
-const _samplePdf = require('../../../../assets/sample_certificate.pdf');
+const pdfAsset = require('../../../../assets/sample_certificate.pdf');
+
+function getPdfSource() {
+  if (Platform.OS === 'android') {
+    return {uri: 'bundle-assets://sample_certificate.pdf'};
+  }
+  const resolved = Image.resolveAssetSource(pdfAsset);
+  return {uri: resolved.uri};
+}
 
 const PdfViewer: React.FC = () => {
   const colors = useColors();
@@ -15,9 +23,8 @@ const PdfViewer: React.FC = () => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    // Set PDF source from bundled asset
     try {
-      setPdfSource(_samplePdf);
+      setPdfSource(getPdfSource());
       setError(null);
     } catch {
       setError('Failed to load PDF from assets');

@@ -13,6 +13,7 @@ type SortOrder = 'asc' | 'desc';
 
 export function useRequestFilters(requests: CertificateRequest[]) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [dashboardStatus, setDashboardStatus] = useState<string | null>(null);
   const [filterCriteria, setFilterCriteria] = useState<FilterCriteria>({});
   const [sortField, setSortField] = useState<SortField>('issued_on');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
@@ -27,6 +28,12 @@ export function useRequestFilters(requests: CertificateRequest[]) {
     setSearchQuery('');
   }, []);
 
+  const handleClearAll = useCallback(() => {
+    setFilterCriteria({});
+    setSearchQuery('');
+    setDashboardStatus(null);
+  }, []);
+
   const handleSort = useCallback((field: SortField, order: SortOrder) => {
     setSortField(field);
     setSortOrder(order);
@@ -39,8 +46,11 @@ export function useRequestFilters(requests: CertificateRequest[]) {
   const processedRequests = useMemo(() => {
     let result: CertificateRequest[] = (requests ?? []).filter(r => r && typeof r === 'object');
 
-    const query = (searchQuery ?? '').toLowerCase().trim();
+    if (dashboardStatus) {
+      result = result.filter(r => r.status === dashboardStatus);
+    }
 
+    const query = (searchQuery ?? '').toLowerCase().trim();
     if (query && result.length) {
       result = result.filter(r => String(r?.reference_no ?? '').toLowerCase() === query);
     }
@@ -49,11 +59,13 @@ export function useRequestFilters(requests: CertificateRequest[]) {
     result = sortRequests(result, sortField, sortOrder);
 
     return result;
-  }, [requests, searchQuery, filterCriteria, sortField, sortOrder]);
+  }, [requests, dashboardStatus, searchQuery, filterCriteria, sortField, sortOrder]);
 
   return {
     searchQuery,
     setSearchQuery,
+    dashboardStatus,
+    setDashboardStatus,
     filterCriteria,
     sortField,
     sortOrder,
@@ -61,6 +73,7 @@ export function useRequestFilters(requests: CertificateRequest[]) {
     processedRequests,
     handleApplyFilters,
     handleClearFilters,
+    handleClearAll,
     handleSort,
     toggleFilters,
   };

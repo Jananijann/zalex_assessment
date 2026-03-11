@@ -25,7 +25,9 @@
       "Bash(npx react-native-asset:*)",
       "Bash(./gradlew clean:*)",
       "Bash(./gradlew assembleDebug)",
-      "Bash(npx react-native:*)"
+      "Bash(npx react-native:*)",
+      "Bash(xxd)",
+      "Bash(grep -A5 '\"\"jest\"\"' /home/janani/ZalexAssessment/package.json)"
     ]
   }
 }

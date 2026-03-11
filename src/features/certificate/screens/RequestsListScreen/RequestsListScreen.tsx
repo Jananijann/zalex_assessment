@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {View, FlatList, RefreshControl} from 'react-native';
 import {Text, FAB} from 'react-native-paper';
 import {NavProps} from '@shared/types/common';
@@ -19,16 +19,10 @@ const RequestsListScreen: React.FC<NavProps> = ({navigation}) => {
   const colors = useColors();
   const {requests, loading, error, refresh, refreshing, onRefresh} = useRequests();
   const filters = useRequestFilters(requests);
-  const [activeStatus, setActiveStatus] = useState<string | null>(null);
 
   const handleStatusPress = useCallback(
     (status: string | null) => {
-      setActiveStatus(status);
-      if (status) {
-        filters.handleApplyFilters({status});
-      } else {
-        filters.handleClearFilters();
-      }
+      filters.setDashboardStatus(prev => (prev === status ? null : status));
     },
     [filters],
   );
@@ -80,7 +74,7 @@ const RequestsListScreen: React.FC<NavProps> = ({navigation}) => {
     <>
       <StatusSummaryCard
         requests={requests}
-        activeStatus={activeStatus}
+        activeStatus={filters.dashboardStatus}
         onStatusPress={handleStatusPress}
       />
       <FilterBar

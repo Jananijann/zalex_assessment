@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import {ScrollView, View, Text as RNText} from 'react-native';
 import {Text, Card, Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
 import {CertificateRequest} from '../../services/types';
 import {useRequests} from '../../hooks/useRequests';
 import {validatePurpose} from '../../utils/validation';
 import {STRINGS} from '../../../../shared/constants/strings';
 import {useColors} from '../../../../shared/theme';
 import {announceForAccessibility} from '../../../../shared/utils/accessibility';
+import {RootState} from '../../../../app/rootReducer';
 import StatusBadge from '../../components/StatusBadge';
 import CharacterCounter from '../../../../shared/components/CharacterCounter';
 import ThemedTextInput from '../../../../shared/components/ThemedTextInput';
@@ -23,18 +25,46 @@ interface Props {
 
 const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
   const colors = useColors();
-  const {request} = route.params as {request: CertificateRequest};
-  const {editPurpose, refresh} = useRequests();
+  const {request: routeRequest} = route.params as {request: CertificateRequest};
+  const {editPurpose} = useRequests();
+
+  // Read latest state from Redux so local edits are reflected
+  const liveRequest = useSelector((state: RootState) =>
+    state.certificate.requests.find(r => r.reference_no === routeRequest.reference_no),
+  );
+  const request = liveRequest || routeRequest;
 
   const [editing, setEditing] = useState(false);
   const [purposeText, setPurposeText] = useState(request.purpose);
   const [purposeError, setPurposeError] = useState<string | undefined>();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  // Keep purposeText in sync when request changes (e.g. after save)
+  useEffect(() => {
+    if (!editing) {
+      setPurposeText(request.purpose);
+    }
+  }, [request.purpose, editing]);
+
+  // Debounce validation to avoid flicker
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const debouncedValidate = useCallback((text: string) => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
+      setPurposeError(validatePurpose(text));
+    }, 400);
+  }, []);
+
   const canEdit = request.status === STRINGS.statusNew;
   const isDone = request.status === STRINGS.statusDone;
 
   const handleSavePurpose = () => {
+    // Clear any pending debounce
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
     const error = validatePurpose(purposeText);
     if (error) {
       setPurposeError(error);
@@ -45,13 +75,13 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
       editPurpose(request.reference_no, purposeText);
       announceForAccessibility(STRINGS.messagePurposeUpdated);
       setEditing(false);
+      setPurposeError(undefined);
       setShowSuccessModal(true);
     }
   };
 
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false);
-    refresh();
     navigation.navigate('RequestsList');
   };
 
@@ -118,8 +148,9 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
                 value={purposeText}
                 onChangeText={text => {
                   setPurposeText(text);
+                  // Only debounce-validate after initial error shown
                   if (purposeError) {
-                    setPurposeError(validatePurpose(text));
+                    debouncedValidate(text);
                   }
                 }}
                 onBlur={() => setPurposeError(validatePurpose(purposeText))}
@@ -151,6 +182,9 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
                     setEditing(false);
                     setPurposeText(request.purpose);
                     setPurposeError(undefined);
+                    if (debounceRef.current) {
+                      clearTimeout(debounceRef.current);
+                    }
                   }}
                   style={[styles.cancelButton, {borderColor: colors.border}]}
                   textColor={colors.textSecondary}
@@ -162,7 +196,9 @@ const RequestDetailsScreen: React.FC<Props> = ({route, navigation}) => {
           ) : (
             <View>
               <View style={[styles.purposeBox, {backgroundColor: colors.borderLight}]}>
-                <Text style={[styles.purposeText, {color: colors.textPrimary}]}>{purposeText}</Text>
+                <Text style={[styles.purposeText, {color: colors.textPrimary}]}>
+                  {request.purpose}
+                </Text>
               </View>
               {canEdit && (
                 <Button

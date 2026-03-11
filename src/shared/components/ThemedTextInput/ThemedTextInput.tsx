@@ -20,6 +20,7 @@ const ThemedTextInput: React.FC<ThemedTextInputProps> = ({
   const [focused, setFocused] = useState(false);
 
   const borderColor = error ? colors.danger : focused ? colors.textPrimary : colors.border;
+  const errorColor = error ? colors.danger : 'transparent';
 
   const inputContent = (
     <View
@@ -63,7 +64,7 @@ const ThemedTextInput: React.FC<ThemedTextInputProps> = ({
       ) : (
         inputContent
       )}
-      {!!error && <Text style={[styles.errorText, {color: colors.danger}]}>{error}</Text>}
+      <Text style={[styles.errorText, {color: errorColor}]}>{error || ' '}</Text>
     </View>
   );
 };
